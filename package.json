@@ -1,0 +1,9 @@
+{
+  "name":"im-hub.io",
+  "version":"0.0.1",
+  "dependencies":{
+    "express": "3.0.x",
+    "socket.io": "0.9.x",
+    "socket.io-client": "git://github.com/LearnBoost/socket.io-client.git"
+  }
+}

@@ -1,0 +1,14 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost');
+  socket.on('server2client', function (data) {
+    // server emitted a news event
+    console.log('server2client:',data);
+  });
+  
+  setInterval(function(){
+    console.log('--still alive');
+    socket.emit('client2server','with data');
+  },5000);
+  
+</script>

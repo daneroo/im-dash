@@ -1,0 +1,23 @@
+var app = require('express')()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server,{
+    // options can go here
+    transports:['xhr-polling']
+  });
+
+server.listen(8080);
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
+
+io.sockets.on('connection', function (socket) {
+  console.log("got connetction");
+  socket.emit('server2client', { hello: 'client' });
+  setTimeout(function(){
+    socket.emit('server2client', { hello: 'again' });
+  },35000)
+  socket.on('client2server', function (data) {
+    console.log('client2server:',data);
+  });
+});

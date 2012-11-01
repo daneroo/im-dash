@@ -23,5 +23,6 @@ io.sockets.on('connection', function (socket) {
   },5000)
   socket.on('client2server', function (data) {
     console.log('client2server:',data);
+	  socket.broadcast.emit('client2server','with data for everyone');
   });
 });

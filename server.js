@@ -17,12 +17,12 @@ server.listen(serverPort);
 
 io.sockets.on('connection', function (socket) {
   console.log("got connetction");
-  socket.emit('server2client', { hello: 'client' });
+  socket.emit('server2client', 'first hello');
   setTimeout(function(){
-    socket.emit('server2client', { hello: 'again' });
+    socket.emit('server2client', 'hello again');
   },5000)
   socket.on('client2server', function (data) {
     console.log('client2server:',data);
-	  socket.broadcast.emit('client2server','with data for everyone');
+	  socket.broadcast.emit('client2server',data+' for everyone');
   });
 });

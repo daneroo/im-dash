@@ -27,5 +27,5 @@ socket.on('disconnect', function () {
 
 setInterval(function(){
   console.log('--still alive');
-  socket.emit('client2server','with data');
+  socket.emit('client2server','from agent');
 },5000);

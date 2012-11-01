@@ -2,16 +2,32 @@ var socket = io.connect();
 socket.on('connecting', function (transport_type) {
   console.log('connecting:',transport_type)
 });
+
+var pad2 = function(number) {
+  return (number < 10 ? '0' : '') + number;
+};
+var timestamp = function() {
+  var d = new Date();
+  return d.getHours() + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds());
+};
+
+function logit(category,data){
+  console.log(category,data);
+  var h = '<p><span class="time">'+timestamp()+'</span><span class="message">'+category+' '+data+'</span></p>'
+  $('#logwell').append($(h));
+  var n=$('#logwell p').length;
+  if (n>10){
+    $('#logwell p:lt('+(n-10)+')').remove()
+  }
+}
 socket.on('server2client', function (data) {
-  // server emitted a news event
-  console.log('server2client:',data);
+  logit('server2client:',data);
 });
 socket.on('client2server', function (data) {
-  // server emitted a news event
-  console.log('client2server:',data);
+  logit('client2server:',data);
 });
 
 setInterval(function(){
   console.log('--still alive');
-  socket.emit('client2server','with data');
-},5000);
+  socket.emit('client2server','from browser');
+},1000);

@@ -1,6 +1,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect('http://localhost');
+  var socket = io.connect();
+  socket.on('connecting', function (transport_type) {
+    console.log('connecting:',transport_type)
+  });
   socket.on('server2client', function (data) {
     // server emitted a news event
     console.log('server2client:',data);

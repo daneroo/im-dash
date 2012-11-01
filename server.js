@@ -3,6 +3,7 @@ var app = require('express')()
   , io = require('socket.io').listen(server,{
     // options can go here
     transports:['xhr-polling']
+    // transports:['jsonp-polling']
   });
 
 server.listen(8080);
@@ -16,7 +17,7 @@ io.sockets.on('connection', function (socket) {
   socket.emit('server2client', { hello: 'client' });
   setTimeout(function(){
     socket.emit('server2client', { hello: 'again' });
-  },35000)
+  },5000)
   socket.on('client2server', function (data) {
     console.log('client2server:',data);
   });

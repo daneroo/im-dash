@@ -1,16 +1,19 @@
-var app = require('express')()
-  , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server,{
-    // options can go here
-    transports:['xhr-polling']
-    // transports:['jsonp-polling']
-  });
+var express = require('express');
+var app = express();
 
-server.listen(8080);
+// app.use(express.bodyParser());
+app.use(express.static(__dirname + '/public'));
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
+var server = require('http').createServer(app);
+
+var io = require('socket.io').listen(server,{
+	// transports:['xhr-polling']
+	// transports:['jsonp-polling']
 });
+
+var serverPort=8080;
+
+server.listen(serverPort);
 
 io.sockets.on('connection', function (socket) {
   console.log("got connetction");

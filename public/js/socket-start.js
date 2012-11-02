@@ -25,9 +25,17 @@ socket.on('server2client', function (data) {
 });
 socket.on('client2server', function (data) {
   logit('client2server:',data);
+  var d = +new Date;
+  var sc = angular.element('#mmm').scope();
+  sc.$apply(function(){
+    sc.metrics[0].value = d
+    // perform any model changes or method invocations here on angular app.
+    sc.metrics.push({key:"metric:"+d, value:d});
+  });
+  console.log('should have set',d);
 });
 
 setInterval(function(){
   console.log('--still alive');
   socket.emit('client2server','from browser');
-},1000);
+},10000);

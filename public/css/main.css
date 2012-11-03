@@ -1,5 +1,10 @@
 /* custom styles */
 
+.metric {
+  width:150px;
+  margin:5px;
+/*  color:red;*/
+}
 
 .form-signin {
   max-width: 300px;

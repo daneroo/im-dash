@@ -12,13 +12,10 @@ socket.on('connecting', function (transport_type) {
 socket.on('connect', function () {
   console.log('connect:')
 });
-socket.on('server2client', function (data) {
+
+socket.on('control', function (data) {
   // server emitted a news event
-  console.log('server2client:',data);
-});
-socket.on('client2server', function (data) {
-  // server emitted a news event
-  console.log('client2server:',data);
+  console.log('control:',data);
 });
 
 socket.on('disconnect', function () {
@@ -26,6 +23,7 @@ socket.on('disconnect', function () {
 });
 
 setInterval(function(){
-  console.log('--still alive');
-  socket.emit('client2server','from agent');
-},5000);
+  var id = Math.round(Math.random()*9999)%5;
+  var val = Math.round(Math.random()*9973)%999;
+  socket.emit('metric',{key:'name-'+id,value:val});
+},100);

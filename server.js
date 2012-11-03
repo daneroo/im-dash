@@ -12,17 +12,25 @@ var io = require('socket.io').listen(server,{
 });
 
 var serverPort=8080;
-
+console.log("Listening on http://localhost:"+serverPort);
 server.listen(serverPort);
 
 io.sockets.on('connection', function (socket) {
   console.log("got connetction");
-  socket.emit('server2client', 'first hello');
-  setTimeout(function(){
-    socket.emit('server2client', 'hello again');
+  
+  socket.emit('ping', 'first hello');
+  setInterval(function(){
+    socket.emit('ping', 'hello again');
   },5000)
-  socket.on('client2server', function (data) {
-    console.log('client2server:',data);
-	  socket.broadcast.emit('client2server',data+' for everyone');
+  
+  socket.on('metric', function (data) {
+    console.log('metric:',data);
+	  socket.broadcast.emit('metric',data);
   });
+  
+  socket.on('control', function (data) {
+    console.log('control:',data);
+	  socket.broadcast.emit('control',data);
+  });
+  
 });

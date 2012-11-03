@@ -12,30 +12,32 @@ var timestamp = function() {
 };
 
 function logit(category,data){
-  console.log(category,data);
-  var h = '<p><span class="time">'+timestamp()+'</span><span class="message">'+category+' '+data+'</span></p>'
+  // console.log(category,data);
+  data = JSON.stringify(data);
+  
+  var h = '<p><span class="time">'+timestamp()+'</span> '+
+  '<span class="category">'+category+'</span> '+
+  '<span class="message">'+data+'</span></p>'
   $('#logwell').append($(h));
   var n=$('#logwell p').length;
   if (n>10){
     $('#logwell p:lt('+(n-10)+')').remove()
   }
 }
-socket.on('server2client', function (data) {
-  logit('server2client:',data);
+
+socket.on('ping', function (data) {
+  logit('ping',data);
 });
-socket.on('client2server', function (data) {
-  logit('client2server:',data);
-  var d = +new Date;
+
+socket.on('metric', function (data) {
+  // console.log(data);
   var sc = angular.element('#mmm').scope();
   sc.$apply(function(){
-    sc.metrics[0].value = d
-    // perform any model changes or method invocations here on angular app.
-    sc.metrics.push({key:"metric:"+d, value:d});
+    sc.messageCount = (sc.messageCount||0)+1;
+    sc.metrics[data.key]=data.value;
   });
-  console.log('should have set',d);
 });
 
 setInterval(function(){
-  console.log('--still alive');
-  socket.emit('client2server','from browser');
+  socket.emit('control',{key:'name',value:'value'});
 },10000);

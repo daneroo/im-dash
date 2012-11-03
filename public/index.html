@@ -57,14 +57,14 @@
         </form>
 
         <div id="mmm" ng-controller="MetricCtrl">
-            <h2>Total Metrics: {{getTotalMetrics()}}</h2>
+            <h2>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h2>
             <ul class="unstyled">
-                <li ng-repeat="metric in metrics">
-                    {{metric.key}}: {{metric.value}}
+                <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
+                    {{key}}: {{value}}
                 </li>
             </ul>
         </div>
-            
+        <div class="clearfix"></div>
         <div id="logwell" class="well">
           <p>... I'm in a well</p>
         </div>

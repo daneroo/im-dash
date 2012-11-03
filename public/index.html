@@ -47,7 +47,7 @@
       <div class="container">
 
         <form class="form-signin hidden">
-          <h2 class="form-signin-heading">Please sign in</h2>
+          <h3 class="form-signin-heading">Please sign in</h3>
           <input type="text" class="input-block-level" placeholder="Email address">
           <input type="password" class="input-block-level" placeholder="Password">
           <label class="checkbox">
@@ -57,7 +57,7 @@
         </form>
 
         <div id="mmm" ng-controller="MetricCtrl">
-            <h2>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h2>
+            <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h3>
             <ul class="unstyled">
                 <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
                     {{key}}: {{value}}

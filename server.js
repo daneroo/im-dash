@@ -1,3 +1,10 @@
+// Config section
+var port = (process.env.VMC_APP_PORT || 8080);
+var host = (process.env.VCAP_APP_HOST || '0.0.0.0'|| 'localhost');
+var ioOpts= (process.env.VMC_APP_PORT)?{
+  'transports': [ 'xhr-polling','jsonp-polling']   
+}:{};
+
 var express = require('express');
 var app = express();
 
@@ -6,14 +13,10 @@ app.use(express.static(__dirname + '/public'));
 
 var server = require('http').createServer(app);
 
-var io = require('socket.io').listen(server,{
-	// transports:['xhr-polling']
-	// transports:['jsonp-polling']
-});
+var io = require('socket.io').listen(server,ioOpts);
 
-var serverPort=8080;
-console.log("Listening on http://localhost:"+serverPort);
-server.listen(serverPort);
+console.log("Listening on http://"+host+":"+port);
+server.listen(port);
 
 io.sockets.on('connection', function (socket) {
   console.log("got connetction");

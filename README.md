@@ -34,10 +34,11 @@ Injecting into angular controller $scope is done this way:
 This ensures that the model updates are propagated appropriately.
 
 ## Real-time
-Finally figured out how to use xhr transport for socket-io. Simply use the master version of `socket.io-client`, and control the transport options as usual from server-side.
+ As of `0.9.11`, socket.io-client no longer requires install from github:master.
 
 from `3rdEden: daneroo: see https://github.com/LearnBoost/socket.io-client/pull/471
 
-## Deploying to cloudfoundry
+## Deploying to cloudfoundry/appfog
 
     vmc push im-dash --runtime node08
+    af push im-dash --runtime node08

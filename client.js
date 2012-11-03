@@ -1,6 +1,8 @@
 var io = require('socket.io-client');
 var endpoint = 'http://localhost:8080';
-var endpoint = 'http://im-dash.cloudfoundry.com:14838';
+// var endpoint = 'http://im-dash.cloudfoundry.com';
+// var endpoint = 'http://im-dash.aws.af.cm/';
+
 var options = {
   // 'try multiple transports':false,
   // transports:['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']

@@ -11,6 +11,16 @@ Initial iplementation is done with simple messaging over socket-io.
     #from browser to agent
     socket.emit('control',{key:'aKey',value:'aValue});
 
+Alternative way to configure tranports, `io.configure()` can also take a scope argument (like `production`)
+
+    // var io = require('socket.io').listen(server);
+    // io.configure(function(){
+    //   io.enable('browser client etag');
+    //   io.set('log level', 1);
+    //   io.set('transports', ['xhr-polling','jsonp-polling']);
+    // });
+
+
 ## Messaging protocol and flow
 
 

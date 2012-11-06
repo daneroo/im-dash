@@ -4,9 +4,6 @@ var host = (process.env.VCAP_APP_HOST || '0.0.0.0'|| 'localhost');
 var ioOpts= (process.env.VMC_APP_PORT)?{
   'transports': [ 'xhr-polling','jsonp-polling']   
 }:{};
-var ioOpts= {
-  'transports': [ 'xhr-polling','jsonp-polling']   
-};
 
 var express = require('express');
 var app = express();

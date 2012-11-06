@@ -1,7 +1,13 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('imDash',[])
-	.controller('RootCtrl',function($scope){
-		$scope.brand = "iMetrical Realtime";
-	});
+angular.module('imDash',['imDash.services'])
+  .controller('RootCtrl',function($scope,socket){
+    $scope.brand = "iMetrical Realtime";
+    socket.on('ping from root', function (data) {		  
+      console.log('ping',data);
+    });
+    setInterval(function(){
+      socket.emit('control',{key:'name',value:'value'});
+    },10000);
+});

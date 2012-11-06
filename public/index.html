@@ -56,7 +56,7 @@
           <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
 
-        <div id="mmm" ng-controller="MetricCtrl">
+        <div ng-controller="MetricCtrl">
             <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h3>
             <ul class="unstyled">
                 <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
@@ -65,8 +65,12 @@
             </ul>
         </div>
         <div class="clearfix"></div>
-        <div id="logwell" class="well">
-          <p>... I'm in a well</p>
+        <div class="well" ng-controller="LogWellCtrl">
+                <p ng-repeat="entry in entries">
+                  <span class="time">{{entry.stamp |date:'HH:mm:ss' }}</span>
+                  <span class="category">{{entry.category}}</span>
+                  <span class="message">{{entry.data}}</span></p>
+                </p>
         </div>
         
         <footer>
@@ -81,13 +85,13 @@
       <script src="js/plugins.js"></script>
 
       <script src="/socket.io/socket.io.js"></script>
-      <script src="js/socket-start.js"></script>
 
       <!-- In dev could use use:
       <script src="js/vendor/angular-1.0.2.js"></script>
       -->
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
       <script src="js/app.js"></script>
+      <script src="js/services.js"></script>
       <script src="js/ctrl.js"></script>
 
       <!-- Google analytics

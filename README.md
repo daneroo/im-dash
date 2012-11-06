@@ -48,7 +48,11 @@ This ensures that the model updates are propagated appropriately.
 
 from `3rdEden: daneroo: see https://github.com/LearnBoost/socket.io-client/pull/471
 
-## Deploying to cloudfoundry/appfog
+## Tooling
+  Try the [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk/related) chrome extension.
+  
+## Deploying to cloudfoundry/appfog/jitsu
 
+    jitsu deploy
     vmc push im-dash --runtime node08
     af push im-dash --runtime node08

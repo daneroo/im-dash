@@ -1,6 +1,6 @@
 var io = require('socket.io-client');
-// var endpoint = 'http://localhost:8080';
-var endpoint = 'http://imetrical.dash.jit.su/'
+var endpoint = 'http://localhost:8080';
+// var endpoint = 'http://imetrical.dash.jit.su/'
 // var endpoint = 'http://dash.imetrical.com/'
 // var endpoint = 'http://im-dash.cloudfoundry.com/';
 // var endpoint = 'http://im-dash.aws.af.cm/';

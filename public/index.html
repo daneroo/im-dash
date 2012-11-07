@@ -58,19 +58,17 @@
 
         <div ng-controller="MetricCtrl">
             <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h3>
-            <ul class="unstyled">
+            <ul class="unstyled">              
                 <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
-                    {{key}}: {{value}}
+                  {{key}}:: {{value}}
                 </li>
             </ul>
         </div>
         <div class="clearfix"></div>
         <div class="well" ng-controller="LogWellCtrl">
-                <p ng-repeat="entry in entries">
-                  <span class="time">{{entry.stamp |date:'HH:mm:ss' }}</span>
-                  <span class="category">{{entry.category}}</span>
-                  <span class="message">{{entry.data}}</span></p>
-                </p>
+          <div ng-repeat="entry in entries">
+            <logentry entry="entry"></logentry>
+          </div>
         </div>
         
         <footer>
@@ -92,6 +90,7 @@
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
       <script src="js/app.js"></script>
       <script src="js/services.js"></script>
+      <script src="js/directives.js"></script>
       <script src="js/ctrl.js"></script>
 
       <!-- Google analytics

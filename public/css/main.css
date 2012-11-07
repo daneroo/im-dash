@@ -6,6 +6,15 @@
 /*  color:red;*/
 }
 
+/* logwell */
+span.time {
+/*  font-family:Courier,monospace;*/
+  width:8em;
+}
+span.category {
+  padding: 0 .5em;
+}
+
 .form-signin {
   max-width: 300px;
   padding: 19px 29px 29px;

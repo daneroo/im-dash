@@ -45,21 +45,20 @@ function LogWellCtrl($scope,socket){
   
   $scope.linesToShow=5;
   function logit(category,data){
-    $scope.entries.push({stamp:new Date(),category:category,data:data});
-    while ($scope.entries.length>maxLines) {
-      $scope.entries.shift();
-    }
+    $scope.entries.unshift({stamp:new Date(),category:category,data:data});
+    // trim to size
+    $scope.entries.splice(maxLines,1000);
   }
   socket.on('ping', function (data) {
     logit('ping',data);
   });
-  
+
   $scope.entries = [
-    {stamp:new Date(),category:'init',data:"I'm in a well"},
-    {stamp:new Date(),category:'init',data:"I'm still in a well"},
-    {stamp:new Date(),category:'init',data:"Hello, I'm in a well"},
+    {stamp:new Date(),category:'init',data:"Help! I'm still in a well"},
     {stamp:new Date(),category:'init',data:"Are you gonna help ?"},
-    {stamp:new Date(),category:'init',data:"Help! I'm still in a well"}
+    {stamp:new Date(),category:'init',data:"Hello, I'm in a well"},
+    {stamp:new Date(),category:'init',data:"I'm still in a well"},
+    {stamp:new Date(),category:'init',data:"I'm in a well"}
   ];
 }
 LogWellCtrl.$inject = ['$scope', 'socket'];

@@ -4,6 +4,7 @@
 angular.module('imDash.services', []).
   value('version', '0.1').
   factory('socket', function ($rootScope) {
+    // var socket = io.connect("http://imetrical.dash.jit.su:80/");
     var socket = io.connect();
     console.log('socket factory invoked')
     socket.on('connecting', function (transport_type) {

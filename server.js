@@ -24,13 +24,40 @@ io.configure('production', function(){
 console.log("Listening on http://"+host+":"+port);
 server.listen(port);
 
-io.sockets.on('connection', function (socket) {
-  console.log("got connetction");
+function openCount(){
+  var m = io.sockets.manager;
+  return Object.keys(m.open).length;
   
+  console.log("connetction counts: con,open,closed,hand,rooms ",
+    Object.keys(m.connected).length,
+    Object.keys(m.open).length,
+    Object.keys(m.closed).length,
+    Object.keys(m.handshaken).length,
+    Object.keys(m.rooms).length
+  );
+}
+
+io.sockets.on('connection', function (socket) {  
+  console.log("new connection");   
+  io.sockets.emit('count',openCount());
+  io.sockets.emit('ping','new connection ('+openCount()+')');
+  socket.on('disconnect', function () {
+    console.log("lost connetction: ");
+    io.sockets.emit('count',openCount());
+    io.sockets.emit('ping','lost connection ('+openCount()+')');
+  });
+});
+
+setInterval(function(){
+  io.sockets.emit('ping', 'hello everyone');
+},5000)
+
+io.sockets.on('connection', function (socket) {
+  console.log("new connection"); 
   socket.emit('ping', 'first hello');
   setInterval(function(){
     socket.emit('ping', 'hello again');
-  },5000)
+  },5000);
   
   socket.on('metric', function (data) {
     // console.log('metric:',data);

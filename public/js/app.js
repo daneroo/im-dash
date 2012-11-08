@@ -4,9 +4,13 @@
 angular.module('imDash',['imDash.services','imDash.directives'])
   .controller('RootCtrl',function($scope,socket){
     $scope.brand = "iMetrical Realtime";
-    socket.on('ping from root', function (data) {		  
-      console.log('ping',data);
+    $scope.connectedCount=0;
+    socket.on('ping', function (data) {		  
+      console.log('root ping',data);
     });
+    socket.on('count',function(count){
+      $scope.connectedCount=count;
+    })
     setInterval(function(){
       socket.emit('control',{key:'name',value:'value'});
     },10000);

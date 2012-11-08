@@ -57,10 +57,10 @@
         </form>
 
         <div ng-controller="MetricCtrl">
-            <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}}</small></h3>
+            <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}} connected: {{connectedCount}}</small></h3>
             <ul class="unstyled">              
                 <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
-                  {{key}}:: {{value}}
+                  {{key}}: {{value}}
                 </li>
             </ul>
         </div>

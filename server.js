@@ -1,6 +1,6 @@
-// Config section
-var port = (process.env.VMC_APP_PORT || 8080);
-var host = (process.env.VCAP_APP_HOST || '0.0.0.0'|| 'localhost');
+
+var options = require('./lib/optconfig');
+
 var ioOpts= (process.env.VMC_APP_PORT)?{
   'transports': [ 'xhr-polling','jsonp-polling']   
 }:{};
@@ -21,8 +21,8 @@ io.configure('production', function(){
   // io.set('log level', 0);
 });
 
-console.log("Listening on http://"+host+":"+port);
-server.listen(port);
+console.log("Listening on http://"+options.host+":"+options.port);
+server.listen(options.port,options.host);
 
 function openCount(){
   var m = io.sockets.manager;

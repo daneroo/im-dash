@@ -1,16 +1,8 @@
-var io = require('socket.io-client');
-var endpoint = 'http://localhost:8080';
-// var endpoint = 'http://imetrical.dash.jit.su/'
-// var endpoint = 'http://dash.imetrical.com/'
-// var endpoint = 'http://im-dash.cloudfoundry.com/';
-// var endpoint = 'http://im-dash.aws.af.cm/';
+var options = require('./lib/optconfig-client');
 
-var options = {
-  // 'try multiple transports':false,
-  // transports:['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
-  // transports:['xhr-polling']
-};
-var socket = io.connect(endpoint,options);
+console.log('connecting to:', options.server);
+var io = require('socket.io-client');
+var socket = io.connect(options.server); // ,ioOpts
 
 socket.on('connecting', function (transport_type) {
   console.log('connecting:',transport_type)

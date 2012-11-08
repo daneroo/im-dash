@@ -57,18 +57,48 @@
         </form>
 
         <div ng-controller="MetricCtrl">
-            <h3>Total Metrics: {{getTotalMetrics()}} <small class="muted">messages: {{messageCount}} connected: {{connectedCount}}</small></h3>
-            <ul class="unstyled">              
-                <li  class="well metric pull-left" ng-repeat="(key,value) in metrics">
-                  {{key}}: {{value}}
-                </li>
+          <h3>Total Agents: {{getTotalAgents()}}
+            <small class="muted">
+              messages: {{messageCount}}
+              connected: {{connectedCount}}
+            </small>
+          </h3>
+
+          <div class="clearfix" ng-repeat="(agent,ametrics) in agents" >
+            <h4>
+              {{agent}} 
+              <small class="muted">messages: {{messageCount}} connected: {{connectedCount}}</small>
+            </h4>
+            <ul class="unstyled clearfix">              
+              <li  class="well metric pull-left" ng-repeat="(metricName,v) in ametrics">
+                {{metricName}}: {{v.value}}
+              </li>
             </ul>
-        </div>
-        <div class="clearfix"></div>
-        <div class="well" ng-controller="LogWellCtrl">
-          <div ng-repeat="entry in entries">
-            <logentry entry="entry"></logentry>
+            <hr>
           </div>
+        </div>
+
+        <div ng-controller="LogWellCtrl">
+          <h4>Logged messages 
+            <form class="form-inline pull-right">
+            <label>Lines to show:</label>
+            <select class="span2" ng-model="linesToShow">
+              <option ng-repeat="i in [2,5,15,25]" value="{{i}">{{i}}</option>
+            </select>
+            </form>
+          </h4>
+          <table class="table table-condensed table-hover">
+            <thead>
+              <tr>
+                <th width="5%">Stamp</th>
+                <th width="5%">Category</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="entry in entries | limitTo:linesToShow" logentry />
+            </tbody>
+          </table>
         </div>
         
         <footer>

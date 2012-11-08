@@ -1,6 +1,6 @@
 var options = require('./lib/optconfig-client');
 
-console.log('connecting to:', options.server);
+console.log('connecting to:', options.server,'as:',options.name);
 var io = require('socket.io-client');
 var socket = io.connect(options.server); // ,ioOpts
 
@@ -23,5 +23,5 @@ socket.on('disconnect', function () {
 setInterval(function(){
   var id = Math.round(Math.random()*9999)%5;
   var val = Math.round(Math.random()*9973)%999;
-  socket.emit('metric',{key:'metric-'+id,value:val});
-},100);
+  socket.emit('metric',{agent:options.name,key:'metric-'+id,value:val});
+},200);

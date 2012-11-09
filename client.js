@@ -23,7 +23,7 @@ socket.on('disconnect', function () {
 });
 
 function sprayValues(){
-  var id = Math.round(Math.random()*9999)%5;
+  var id = Math.round(Math.random()*9999)%4;
   var val = Math.round(Math.random()*9973)%999;
   socket.emit('metric',{agent:options.name,key:'metric-'+id,value:val});  
 }

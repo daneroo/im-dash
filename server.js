@@ -25,16 +25,9 @@ console.log("Listening on http://"+options.host+":"+options.port);
 server.listen(options.port,options.host);
 
 function openCount(){
+  // sockets.manager holds connected,open,closed,handshake, rooms, roomsCLient
   var m = io.sockets.manager;
   return Object.keys(m.open).length;
-  
-  console.log("connetction counts: con,open,closed,hand,rooms ",
-    Object.keys(m.connected).length,
-    Object.keys(m.open).length,
-    Object.keys(m.closed).length,
-    Object.keys(m.handshaken).length,
-    Object.keys(m.rooms).length
-  );
 }
 
 io.sockets.on('connection', function (socket) {  

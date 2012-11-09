@@ -57,21 +57,21 @@
         </form>
 
         <div ng-controller="MetricCtrl">
-          <h3>Total Agents: {{getTotalAgents()}}
+          <h3>Total Agents: {{agentCount}}
             <small class="muted">
               messages: {{messageCount}}
               connected: {{connectedCount}}
             </small>
           </h3>
 
-          <div class="clearfix" ng-repeat="(agent,ametrics) in agents" >
+          <div class="clearfix" ng-repeat="(agent,metrics) in agents" >
             <h4>
               {{agent}} 
-              <small class="muted">messages: {{messageCount}} connected: {{connectedCount}}</small>
+              <small class="muted">messages: {{messageCountbyAgent[agent]}}</small>
             </h4>
             <ul class="unstyled clearfix">              
-              <li  class="well metric pull-left" ng-repeat="(metricName,v) in ametrics">
-                {{metricName}}: {{v.value}}
+              <li  class="well metric pull-left" ng-repeat="(metric,v) in metrics">
+                {{metric}}: {{v.value}}
               </li>
             </ul>
             <hr>

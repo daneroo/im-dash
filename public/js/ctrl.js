@@ -1,42 +1,46 @@
 function MetricCtrl($scope,socket){
-  $scope.getTotalAgents = function(){
-    return Object.keys($scope.agents).length;
+  $scope.agentCount = 0;
+  $scope.messageCount = 0;
+  $scope.messageCountbyAgent = {
+    
   };
-
-  socket.on('metric', function (data) {
-    // console.log(data);
-    $scope.messageCount = ($scope.messageCount||0)+1;
-    var agentName = data.agent||'anonymous';
-    $scope.agents[agentName] = $scope.agents[agentName]||{};
-    var metricName = data.key||'value';
-    var rec={
+  function updateCounts(agentName){
+    $scope.messageCount++;
+    var mba = $scope.messageCountbyAgent; 
+    if (! mba[agentName]) {
+      mba[agentName]=0;
+      // recalc total agents
+      $scope.agentCount = Object.keys($scope.agents).length;
+    }
+    mba[agentName]=mba[agentName]+1;    
+  }
+  function storeMessage(agentName,metricName,value){
+    updateCounts(agentName);    
+    // make a hole!
+    var agents = $scope.agents;
+    var agent = agents[agentName] = agents[agentName]||{};
+    // bury the treasure
+    agent[metricName] = {
       agent:agentName,
       name:metricName,
-      value:data.value
+      value:value
     };
-    $scope.agents[agentName][metricName] = rec;
+  }
+  socket.on('metric', function (data) {
+    var agentName = data.agent||'anonymous';
+    var metricName = data.key||'value';
+    var value = data.value;
+    storeMessage(agentName,metricName,value);
   });
   
-  $scope.messageCount = 0;
   
   $scope.sorter = function(thing){
     console.log('thing',thing);
     return thing;
   }
-  $scope.agents = {
-    'self':{
-      'universe':{
-        agent:'self',
-        name:'universe',
-        value:42
-      },
-      'human':{
-        agent:'self',
-        name:'human',
-        value:46
-      }
-    }
-  };
+  $scope.agents = {};
+  storeMessage('self','universe',42);
+  storeMessage('self','human',46);
 }
 MetricCtrl.$inject = ['$scope', 'socket'];
 

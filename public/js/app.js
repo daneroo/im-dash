@@ -5,10 +5,10 @@ angular.module('imDash',['imDash.services','imDash.directives'])
   .controller('RootCtrl',function($scope,socket){
     $scope.brand = "iMetrical Realtime";
     $scope.connectedCount=0;
-    socket.on('ping', function (data) {		  
-      console.log('root ping',data);
-    });
+    
+    // message broadcast when server observes new/lost connections
     socket.on('count',function(count){
+      // console.log('count');
       $scope.connectedCount=count;
     })
     setInterval(function(){

@@ -1,6 +1,6 @@
 {
   "name": "im-dash",
-  "version": "0.0.1-8",
+  "version": "0.0.1-9",
   "dependencies": {
     "optimist": "0.3.x",
     "express": "3.0.x",

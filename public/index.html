@@ -64,7 +64,7 @@
             </small>
           </h3>
 
-          <div class="clearfix" ng-repeat="(agent,metrics) in agents" >
+          <div ng-repeat="(agent,metrics) in agents" >
             <h4>
               {{agent}} 
               <small class="muted">messages: {{messageCountbyAgent[agent]}}</small>
@@ -82,7 +82,7 @@
           <h4>Logged messages 
             <form class="form-inline pull-right">
             <label>Lines to show:</label>
-            <select class="span2" ng-model="linesToShow">
+            <select style="width:4em" ng-model="linesToShow">
               <option value="2">2</option>
               <option value="5">5</option>
               <option ng-repeat="i in [15,25]" value="{{i}}">{{i}}</option>

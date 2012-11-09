@@ -53,13 +53,13 @@ io.sockets.on('connection', function (socket) {
   },5000);
   
   socket.on('metric', function (data) {
-    // console.log('metric:',data);
-	  socket.broadcast.emit('metric',data);
+    socket.broadcast.emit('metric',data);
   });
-  
+
   socket.on('control', function (data) {
-    // console.log('control:',data);
-	  socket.broadcast.emit('control',data);
+    socket.broadcast.emit('control',data);
   });
-  
+  socket.on('ack', function (data) {
+    socket.broadcast.emit('ack',data);
+  });  
 });

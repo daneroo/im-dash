@@ -10,8 +10,10 @@ angular.module('imDash',['imDash.services','imDash.directives'])
     socket.on('count',function(count){
       // console.log('count');
       $scope.connectedCount=count;
-    })
-    setInterval(function(){
-      socket.emit('control',{key:'name',value:'value'});
-    },10000);
+    });
+    
+    // send a fake control command
+    // setInterval(function(){
+    //   socket.emit('control',{key:'name',value:'value'});
+    // },10000);
 });

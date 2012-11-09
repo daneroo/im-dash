@@ -12,16 +12,39 @@ socket.on('connect', function () {
 });
 
 socket.on('control', function (data) {
-  // server emitted a news event
   console.log('control:',data);
+  if (data && data.key==='speed' && data.agent===options.name){
+    adjustSpeed(data.value);
+  }
 });
 
 socket.on('disconnect', function () {
   console.log('disconnect:');
 });
 
-setInterval(function(){
+function sprayValues(){
   var id = Math.round(Math.random()*9999)%5;
   var val = Math.round(Math.random()*9973)%999;
-  socket.emit('metric',{agent:options.name,key:'metric-'+id,value:val});
-},200);
+  socket.emit('metric',{agent:options.name,key:'metric-'+id,value:val});  
+}
+// speeds are 20,200,2000
+var ms=200;
+function adjustSpeed(incr){
+   if (incr>0){
+     if (ms<2000) ms=ms*10;
+   } else {
+     if (ms>20) ms=ms/10;
+   }
+   console.log('adjusted speed to',ms);
+   clearInterval(intv);
+   intv = setInterval(sprayValues,ms);
+   socket.emit('ack',{agent:options.name,key:'speed',value:(1000/ms)+"/s"});  
+}
+
+var intv = setInterval(sprayValues,ms);
+socket.emit('ack',{agent:options.name,key:'speed',value:(1000/ms)+"/s"});  
+
+// // randomly vary the speed
+// setInterval(function(){
+//   adjustSpeed(Math.random()-0.5);
+// },5000);

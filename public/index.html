@@ -69,6 +69,13 @@
               {{agent}} 
               <small class="muted">messages: {{messageCountbyAgent[agent]}}</small>
             </h4>
+            <div ng-hide="agent=='self'">
+              <div class="btn-group">
+                <button ng-click="adjustSpeed(agent,1)" class="btn btn-warning"><i class="icon-backward icon-white"></i> Slower</button>
+                <button ng-click="adjustSpeed(agent,-1)" class="btn btn-danger">Faster <i class="icon-forward icon-white"></i></button>
+              </div>
+              <button ng-show="speed[agent]" class="btn disabled">Speed: {{speed[agent]}}</button>
+            </div>
             <ul class="unstyled clearfix">              
               <li  class="well metric pull-left" ng-repeat="(metric,v) in metrics">
                 {{metric}}: {{v.value}}

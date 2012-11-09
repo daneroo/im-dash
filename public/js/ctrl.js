@@ -1,9 +1,11 @@
 function MetricCtrl($scope,socket){
   $scope.agentCount = 0;
   $scope.messageCount = 0;
-  $scope.messageCountbyAgent = {
-    
-  };
+  $scope.messageCountbyAgent = {};
+  $scope.speed = {};
+  $scope.adjustSpeed = function(agent,incr){
+    socket.emit('control',{agent:agent, key:'speed',value:incr});
+  }
   function updateCounts(agentName){
     $scope.messageCount++;
     var mba = $scope.messageCountbyAgent; 
@@ -26,6 +28,11 @@ function MetricCtrl($scope,socket){
       value:value
     };
   }
+  socket.on('ack', function (data) {
+    if (data && data.agent && data.key==='speed'){
+      $scope.speed[data.agent]=data.value;
+    }
+  });
   socket.on('metric', function (data) {
     var agentName = data.agent||'anonymous';
     var metricName = data.key||'value';
@@ -34,10 +41,6 @@ function MetricCtrl($scope,socket){
   });
   
   
-  $scope.sorter = function(thing){
-    console.log('thing',thing);
-    return thing;
-  }
   $scope.agents = {};
   storeMessage('self','universe',42);
   storeMessage('self','human',46);
@@ -55,6 +58,11 @@ function LogWellCtrl($scope,socket){
   }
   socket.on('ping', function (data) {
     logit('ping',data);
+  });
+  socket.on('ack', function (data) {
+    if (data && data.agent && data.key==='speed'){
+      logit('speed','set to '+data.value+' for '+data.agent);
+    }
   });
 
   $scope.entries = [

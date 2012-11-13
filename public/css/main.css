@@ -31,3 +31,8 @@
   padding: 7px 9px;
 }
 
+path.sparkline {
+  stroke: steelblue;
+  stroke-width: 1;
+  fill: none;
+}

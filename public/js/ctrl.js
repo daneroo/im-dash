@@ -74,3 +74,20 @@ function LogWellCtrl($scope,socket){
   ];
 }
 LogWellCtrl.$inject = ['$scope', 'socket'];
+
+function ChordCtrl($scope,socket){
+  var which=0;
+  var fibs = [
+  [2,3,5,8,13,21],
+  [3,5,8,13,21,34]
+  ];
+  $scope.data=fibs[which];
+
+  $scope.toggle = function() {
+    which = (which+1)%2;
+    $scope.data=fibs[which];
+  }
+
+}
+ChordCtrl.$inject = ['$scope', 'socket'];
+

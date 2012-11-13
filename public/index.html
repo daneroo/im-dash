@@ -56,6 +56,10 @@
           <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
 
+        <div ng-controller="ChordCtrl">
+          <button ng-click="toggle()" class="btn"> Toggle</button>
+          <sparkline val="data"></sparkline>
+        </div>
         <div ng-controller="MetricCtrl">
           <h3>Total Agents: {{agentCount}}
             <small class="muted">
@@ -63,6 +67,7 @@
               connected: {{connectedCount}}
             </small>
           </h3>
+
 
           <div ng-repeat="(agent,metrics) in agents" >
             <h4>
@@ -122,6 +127,8 @@
       <script src="js/vendor/bootstrap.min.js"></script>
       -->
       <script src="js/plugins.js"></script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
       <script src="/socket.io/socket.io.js"></script>
 
       <!-- In dev could use use:

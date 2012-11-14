@@ -83,6 +83,16 @@ function ChordCtrl($scope,socket){
   ];
   $scope.data=fibs[which];
 
+  $scope.recentMetrics = 0;
+  $scope.totalMetrics = 0;
+
+  socket.on('activity', function (data) {
+    // console.log('got',data);
+    $scope.recentMetrics = data.recentMetrics+Math.random()*0.0001;
+    $scope.totalMetrics = data.totalMetrics;
+
+  });
+
   $scope.toggle = function() {
     which = (which+1)%2;
     $scope.data=fibs[which];

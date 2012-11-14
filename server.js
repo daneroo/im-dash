@@ -45,6 +45,14 @@ setInterval(function(){
   io.sockets.emit('ping', 'hello everyone');
 },5000)
 
+var totalMetrics=0;
+var sentMetrics=0;
+setInterval(function(){
+  var recentMetrics=totalMetrics - sentMetrics;
+  sentMetrics = totalMetrics;
+  io.sockets.emit('activity', {totalMetrics:totalMetrics, recentMetrics:recentMetrics,stamp:new Date});
+},2000)
+
 io.sockets.on('connection', function (socket) {
   console.log("new connection"); 
   socket.emit('ping', 'first hello');
@@ -53,6 +61,7 @@ io.sockets.on('connection', function (socket) {
   },5000);
   
   socket.on('metric', function (data) {
+    totalMetrics++;
     socket.broadcast.emit('metric',data);
   });
 

@@ -9,7 +9,21 @@ directive('logentry', function() {
     template: '<td class="time">{{entry.stamp |date:"HH:mm:ss" }}</td>' + '<td class="category">{{entry.category}}</td>' + '<td class="message">{{entry.data}}</td>',
     restrict: 'A'
   };
+}).directive('metric', function() {
+  return {
+    template: '<div>{{v.name}}:={{v.value}}</div>',
+    restrict: 'E',
+    scope: {
+      v: '='
+    },
+    link: function(scope, element, attrs) {
+      console.log('linking');
+      return;
+    }
+  };
 }).directive('sparkline', function() {
+  console.log('compiling spark');
+
   return {
     restrict: 'E',
     terminal: true,
@@ -18,24 +32,31 @@ directive('logentry', function() {
       grouped: '='
     },
     link: function(scope, element, attrs) {
+      console.log('linking spark');
       var margin = 10,
-        width = 400,
-        height = 100 - .5 - margin;
-
-      var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height + margin);
-      var interpolation = "basis"; // linear
+        width = 200,
+        height = 60; // - .5 - margin;
+      var svg = d3.select(element[0]).append("svg:svg").attr('width', '100%').attr('height', '100%');
+      var interpolation = 'linear'; //'basis'; // linear
       var transitionDelay = 1000;
-
       var data = [];
-      var dataLength = 50;
+      var dataLength = 20;
       for(var i = dataLength - 1; i >= 0; i--) {
-        data[i] = Math.random() * 10;
+        data[i] = 0;
       };
-      console.log(data.length);
-      // X scale will fit values from 0-10 within pixels 0-100
-      var x = d3.scale.linear().domain([0, 48]).range([-5, width]); // starting point is -5 so the first value doesn't show and slides off the edge as part of the transition        // Y scale will fit values from 0-10 within pixels 0-100
-      var y = d3.scale.linear().domain([0, 10]).range([0, height]);
 
+      var x = d3.scale.linear().domain([0, dataLength - 1]).range([-5, width]);
+      var y = d3.scale.linear().domain([0, 1]).range([height, 0]);
+
+      function rescaleY() {
+        var maxy = d3.max(data, function(d) {
+          return d;
+        });
+        y = d3.scale.linear().domain([0.1, maxy]).range([height, 0]);
+      };
+
+      // var x = d3.scale.linear().domain([0, dataLength]).range([-5, width]); // starting point is -5 so the first value doesn't show and slides off the edge as part of the transition        // Y scale will fit values from 0-10 within pixels 0-100
+      // var y = d3.scale.linear().domain([0, 10]).range([0, height]);
       // create a line object that represents the SVN line we're creating
       var line = d3.svg.line().x(function(d, i) {
         return x(i);
@@ -67,23 +88,21 @@ directive('logentry', function() {
       scope.$watch('val', function(newVal, oldVal) {
         // console.log(newVal, oldVal);
         if(angular.equals(newVal, oldVal)) {
-          console.log('equals');
+          // console.log('equals');
           // return;
         }
         // clear the elements inside of the directive
         // svg.selectAll('*').remove();
+
         // if 'val' is undefined, exit
-        if(!newVal) {
-          return;
-        }
+        if(!newVal) { return;  }
+        console.log('newVal,old', newVal, oldVal);
 
-        var v = data.shift(); // remove the first element of the array
-        // data.push(v); 
-        data.push(Math.random() * 10)
-
-        // redrawWithAnimation();
-        redrawWithoutAnimation();
-
+        data.shift(); // remove the first element of the array
+        data.push(newVal);
+        rescaleY();
+        redrawWithAnimation();
+        // redrawWithoutAnimation();
       });
     }
   };

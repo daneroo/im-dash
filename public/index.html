@@ -57,8 +57,9 @@
         </form>
 
         <div ng-controller="ChordCtrl">
-          <button ng-click="toggle()" class="btn"> Toggle</button>
-          <sparkline val="data"></sparkline>
+          <!-- <button ng-click="toggle()" class="btn"> Toggle</button> -->
+          <sparkline val="recentMetrics"></sparkline>
+          <sparkline val="recentMetrics*2"></sparkline>
         </div>
         <div ng-controller="MetricCtrl">
           <h3>Total Agents: {{agentCount}}
@@ -84,6 +85,7 @@
             <ul class="unstyled clearfix">              
               <li  class="well metric pull-left" ng-repeat="(metric,v) in metrics">
                 {{metric}}: {{v.value}}
+                <!-- <metric v="v"></metric> -->
               </li>
             </ul>
             <hr>

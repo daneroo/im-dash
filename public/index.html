@@ -58,9 +58,9 @@
 
         <div ng-controller="ChordCtrl">
           <!-- <button ng-click="toggle()" class="btn"> Toggle</button> -->
-          <sparkline width="200" height="50" val="recentMetrics"></sparkline>
-          <sparkline width="240" height="30" val="recentMetrics*2"></sparkline>
-          <sparkline val="recentMetrics*3"></sparkline>
+          <sparkline width="200" height="50" animate="true" val="recentMetrics"></sparkline>
+          <sparkline width="240" height="30" animate="true" val="recentMetrics*2"></sparkline>
+          <sparkline val="recentMetrics*3" animate="true"></sparkline>
         </div>
         <div ng-controller="MetricCtrl">
           <h3>Total Agents: {{agentCount}}
@@ -85,10 +85,12 @@
             </div>
             <ul class="unstyled clearfix">              
               <li  class="well metric pull-left" ng-repeat="(metric,v) in metrics">
-                {{metric}}: {{v.value}}
-                <!-- <metric v="v"></metric> -->
-                <sparkline val="v.value"></sparkline>
-
+<!--                 
+                <span class="muted">{{metric}}</span>
+                <span class="metricValue pull-right">{{v.value}}</span>                 
+                <sparkline val="v.value" animate="speed[agent]=='0.5/s'"></sparkline>
+ -->
+                 <metric v="v" animate="speed[agent]=='0.5/s'"></metric>
               </li>
             </ul>
             <hr>

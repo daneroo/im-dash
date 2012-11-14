@@ -3,7 +3,13 @@
 .metric {
   width:150px;
   margin:5px;
+  padding:10px;
   /*color:red;*/
+}
+
+.metric .metricValue {
+  font-weight:bold;
+  font-size: 130%;
 }
 
 .form-signin {
@@ -32,7 +38,7 @@
 }
 
 sparkline {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   display:inline-block;
 }
 path.sparkline {

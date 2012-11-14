@@ -11,14 +11,14 @@ directive('logentry', function() {
   };
 }).directive('metric', function() {
   return {
-    template: '<div>{{v.name}}:={{v.value}}</div>',
+    template: '<span class="muted">{{v.name}}</span><span class="metricValue pull-right">{{v.value}}</span><sparkline val="v.value" animate="animate"></sparkline>',
     restrict: 'E',
     scope: {
-      v: '='
+      v: '=',
+      animate: '='
     },
     link: function(scope, element, attrs) {
-      console.log('linking');
-      return;
+      console.log('linking metric');
     }
   };
 }).directive('sparkline', function() {
@@ -30,13 +30,15 @@ directive('logentry', function() {
     terminal: true,
     scope: {
       val: '=',
+      animate: '=',
       width: '=',
       height: '='
     },
     link: function(scope, element, attrs) {
       var width = scope.width || 100,
-        height = scope.height || 24;
-      console.log('linking spark', width, height);
+        height = scope.height || 24,
+        marginY = 3
+        console.log('linking spark', width, height);
       var svg = d3.select(element[0]).append("svg:svg").attr('width', width).attr('height', height);
       var interpolation = 'basis'; //'linear';
       var transitionDelay = 1000;
@@ -48,11 +50,11 @@ directive('logentry', function() {
 
       var x = d3.scale.linear().domain([0, dataLength - 1]).range([-5, width]);
       // initial maxY=1
-      var y = d3.scale.linear().domain([0, 1]).range([height, 0]);
+      var y = d3.scale.linear().domain([0, 1]).range([height - marginY, marginY]);
 
       function rescaleY() {
         var maxY = d3.max(data);
-        y = d3.scale.linear().domain([0.1, maxY]).range([height, 0]);
+        y = d3.scale.linear().domain([0.1, maxY]).range([height - marginY, marginY]);
       };
 
       // var x = d3.scale.linear().domain([0, dataLength]).range([-5, width]); // starting point is -5 so the first value doesn't show and slides off the edge as part of the transition        // Y scale will fit values from 0-10 within pixels 0-100
@@ -86,6 +88,7 @@ directive('logentry', function() {
       }
 
       scope.$watch('val', function(newVal, oldVal) {
+        // console.log('watching spark', scope.animate);
         // console.log(newVal, oldVal);
         if(angular.equals(newVal, oldVal)) {
           // console.log('equals');
@@ -98,12 +101,14 @@ directive('logentry', function() {
           return;
         }
         // console.log('newVal,old', newVal, oldVal);
-
         data.shift(); // remove the first element of the array
         data.push(newVal);
         rescaleY();
-        // redrawWithAnimation();
-        redrawWithoutAnimation();
+        if(scope.animate) {
+          redrawWithAnimation();
+        } else {
+          redrawWithoutAnimation();
+        }
       });
     }
   };

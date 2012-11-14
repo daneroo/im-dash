@@ -16,17 +16,23 @@ function MetricCtrl($scope,socket){
     }
     mba[agentName]=mba[agentName]+1;    
   }
+
   function storeMessage(agentName,metricName,value){
     updateCounts(agentName);    
     // make a hole!
     var agents = $scope.agents;
     var agent = agents[agentName] = agents[agentName]||{};
-    // bury the treasure
-    agent[metricName] = {
-      agent:agentName,
-      name:metricName,
-      value:value
-    };
+    // bury the treasure - but avoid replacing the object if possible
+    var metric = agent[metricName];
+    if (metric) {
+      metric.value=value;
+    } else {
+      agent[metricName] = {
+        agent:agentName,
+        name:metricName,
+        value:value
+      };
+    }
   }
   socket.on('ack', function (data) {
     if (data && data.agent && data.key==='speed'){

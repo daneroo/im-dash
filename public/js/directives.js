@@ -47,13 +47,12 @@ directive('logentry', function() {
       };
 
       var x = d3.scale.linear().domain([0, dataLength - 1]).range([-5, width]);
+      // initial maxY=1
       var y = d3.scale.linear().domain([0, 1]).range([height, 0]);
 
       function rescaleY() {
-        var maxy = d3.max(data, function(d) {
-          return d;
-        });
-        y = d3.scale.linear().domain([0.1, maxy]).range([height, 0]);
+        var maxY = d3.max(data);
+        y = d3.scale.linear().domain([0.1, maxY]).range([height, 0]);
       };
 
       // var x = d3.scale.linear().domain([0, dataLength]).range([-5, width]); // starting point is -5 so the first value doesn't show and slides off the edge as part of the transition        // Y scale will fit values from 0-10 within pixels 0-100
@@ -103,8 +102,8 @@ directive('logentry', function() {
         data.shift(); // remove the first element of the array
         data.push(newVal);
         rescaleY();
-        redrawWithAnimation();
-        // redrawWithoutAnimation();
+        // redrawWithAnimation();
+        redrawWithoutAnimation();
       });
     }
   };

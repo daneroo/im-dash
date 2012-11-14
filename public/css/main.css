@@ -32,10 +32,8 @@
 }
 
 sparkline {
-  /*border: 1px solid red;*/
+  border: 1px solid red;
   display:inline-block;
-  width:200px;
-  height:60px
 }
 path.sparkline {
   stroke: steelblue;

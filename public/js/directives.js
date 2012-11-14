@@ -25,19 +25,20 @@ directive('logentry', function() {
   console.log('compiling spark');
 
   return {
+    // template: '<div class="zzz"></div>',
     restrict: 'E',
     terminal: true,
     scope: {
       val: '=',
-      grouped: '='
+      width: '=',
+      height: '='
     },
     link: function(scope, element, attrs) {
-      console.log('linking spark');
-      var margin = 10,
-        width = 200,
-        height = 60; // - .5 - margin;
-      var svg = d3.select(element[0]).append("svg:svg").attr('width', '100%').attr('height', '100%');
-      var interpolation = 'linear'; //'basis'; // linear
+      var width = scope.width || 100,
+        height = scope.height || 24;
+      console.log('linking spark', width, height);
+      var svg = d3.select(element[0]).append("svg:svg").attr('width', width).attr('height', height);
+      var interpolation = 'basis'; //'linear';
       var transitionDelay = 1000;
       var data = [];
       var dataLength = 20;
@@ -93,10 +94,11 @@ directive('logentry', function() {
         }
         // clear the elements inside of the directive
         // svg.selectAll('*').remove();
-
         // if 'val' is undefined, exit
-        if(!newVal) { return;  }
-        console.log('newVal,old', newVal, oldVal);
+        if(!newVal) {
+          return;
+        }
+        // console.log('newVal,old', newVal, oldVal);
 
         data.shift(); // remove the first element of the array
         data.push(newVal);

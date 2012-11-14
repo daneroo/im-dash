@@ -57,10 +57,12 @@
         </form>
 
         <div ng-controller="ChordCtrl">
-          <!-- <button ng-click="toggle()" class="btn"> Toggle</button> -->
+<!-- 
           <sparkline width="200" height="50" animate="true" val="recentMetrics"></sparkline>
           <sparkline width="240" height="30" animate="true" val="recentMetrics*2"></sparkline>
           <sparkline val="recentMetrics*3" animate="true"></sparkline>
+ -->
+           <sparkline width="300" height="30" animate="true" val="recentMetrics"></sparkline>
         </div>
         <div ng-controller="MetricCtrl">
           <h3>Total Agents: {{agentCount}}
@@ -111,7 +113,7 @@
           <table class="table table-condensed table-hover">
             <thead>
               <tr>
-                <th width="5%">Stamp</th>
+                <th width="5%">Stamp &darr;</th>
                 <th width="5%">Category</th>
                 <th>Message</th>
               </tr>
